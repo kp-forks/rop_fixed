@@ -45,7 +45,7 @@ def detect_fps(target_path: str) -> float:
 def extract_frames(target_path: str, fps: float = 30) -> bool:
     temp_directory_path = get_temp_directory_path(target_path)
     temp_frame_quality = roop.globals.temp_frame_quality * 31 // 100
-    return run_ffmpeg(['-hwaccel', 'auto', '-i', target_path, '-q:v', str(temp_frame_quality), '-pix_fmt', 'rgb24', '-vf', 'fps=' + str(fps), os.path.join(temp_directory_path, '%04d.' + roop.globals.temp_frame_format)])
+    return run_ffmpeg(['-hwaccel', 'auto', '-i', target_path, '-q:v', str(temp_frame_quality), '-pix_fmt', 'rgb24', '-vf', 'fps=' + str(fps), '-y', os.path.join(temp_directory_path, '%04d.' + roop.globals.temp_frame_format)])
 
 
 def create_video(target_path: str, fps: float = 30) -> bool:
@@ -70,7 +70,7 @@ def restore_audio(target_path: str, output_path: str) -> None:
 
 def get_temp_frame_paths(target_path: str) -> List[str]:
     temp_directory_path = get_temp_directory_path(target_path)
-    return glob.glob((os.path.join(glob.escape(temp_directory_path), '*.' + roop.globals.temp_frame_format)))
+    return sorted(glob.glob((os.path.join(glob.escape(temp_directory_path), '*.' + roop.globals.temp_frame_format))))
 
 
 def get_temp_directory_path(target_path: str) -> str:
