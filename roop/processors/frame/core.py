@@ -86,6 +86,5 @@ def update_progress(progress: Any = None) -> None:
         'memory_usage': '{:.2f}'.format(memory_usage).zfill(5) + 'GB',
         'execution_providers': roop.globals.execution_providers,
         'execution_threads': roop.globals.execution_threads
-    })
-    progress.refresh()
+    }, refresh=False)
     progress.update(1)
