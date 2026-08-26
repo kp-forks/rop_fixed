@@ -21,14 +21,12 @@ if platform.system().lower() == 'darwin':
 
 
 def run_ffmpeg(args: List[str]) -> bool:
-    commands = ['ffmpeg', '-hide_banner', '-loglevel', roop.globals.log_level]
+    commands = ['ffmpeg', '-hide_banner', '-loglevel', roop.globals.log_level, '-stats']
     commands.extend(args)
     try:
-        subprocess.check_output(commands, stderr=subprocess.STDOUT)
-        return True
-    except Exception:
-        pass
-    return False
+        return subprocess.run(commands).returncode == 0
+    except OSError:
+        return False
 
 
 def detect_fps(target_path: str) -> float:
